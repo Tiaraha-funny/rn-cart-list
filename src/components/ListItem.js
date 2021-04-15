@@ -18,8 +18,7 @@ const styles = StyleSheet.create({
         tintColor: '#69696969',
         ...Platform.select({
             ios: { tintColor: 'blue' },
-            android: { tintColor: 'blue' },
-
+            android: { tintColor: 'red' },
         })
     },
     separator: {
