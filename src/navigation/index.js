@@ -62,7 +62,6 @@ const Tabs = () => {
                     android: focused
                     ? require('../assets/icons/ios-star.png')
                     : require('../assets/icons/ios-star-outline.png')
-
                 })
             }
             return (

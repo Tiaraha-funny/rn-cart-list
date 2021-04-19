@@ -50,6 +50,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
+  sectionContainer: {
+    backgroundColor: "#d3d3d3",
+    padding: 10,
+  },
+  sectionText: {
+    fontWeight: '600'
+  }
 });
 
 export const Separator = () => <View style={styles.separator} />;
@@ -67,12 +74,20 @@ const leftActions = (progress, dragX) => {
     </View>
   );
 };
+
+export const SectionHeader = ({ title }) => (
+  <View style={[styles.container, styles.sectionContainer]}>
+    <Text style={styles.sectionText}>{title}</Text>
+  </View>
+)
+
 const RightActions = (progress, dragX) => {
   const scale = dragX.interpolate({
     inputRange: [-100, 0],
     outputRange: [1, 0],
     extrapolate: 'clamp',
   });
+
   return (
     <View style={styles.rightAction}>
       <Animated.Text style={[styles.actionText, {transform: [{scale}]}]}>
@@ -108,7 +123,7 @@ const ListItem = ({
       onSwipeableLeftOpen={onAddedSwipe}
       renderRightActions={onDeleteSwipe && RightActions}
       onSwipeableRightOpen={onDeleteSwipe}>
-        
+
       <TouchableOpacity onPress={onRowPress}>
         <View style={styles.container}>
           <Text style={styles.text}>{name}</Text>
