@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
 });
+
 export const Separator = () => <View style={styles.separator} />;
 const leftActions = (progress, dragX) => {
   const scale = dragX.interpolate({
@@ -80,6 +81,7 @@ const RightActions = (progress, dragX) => {
     </View>
   );
 };
+
 const ListItem = ({
   name,
   onRowPress,
@@ -106,6 +108,7 @@ const ListItem = ({
       onSwipeableLeftOpen={onAddedSwipe}
       renderRightActions={onDeleteSwipe && RightActions}
       onSwipeableRightOpen={onDeleteSwipe}>
+        
       <TouchableOpacity onPress={onRowPress}>
         <View style={styles.container}>
           <Text style={styles.text}>{name}</Text>
