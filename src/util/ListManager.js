@@ -11,10 +11,16 @@ const updateStoreCurrentCart = list => {
   AsyncStorage.setItem('@@GroceryList/currentCart', JSON.stringify(list));
 };
 
+const updateStoreCurrentFavorite = list => {
+  AsyncStorage.setItem('@@GroceryList/currentFavorite', JSON.stringify(list));
+};
+
+
 export const useCurrentList = () => {
     const [list, setList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [ cart, setCart ] = useState([]);
+    const [ favorite, setFavorite ] = useState([]);
   
     const addItem = text => {
       const newList = [{id: uuid(), name: text}, ...list];
@@ -28,6 +34,19 @@ export const useCurrentList = () => {
       setCart(newCart);
       updateStoreCurrentCart(newCart)
     };
+
+    const addToFavorite = item => {
+      const favoriteList = list.filter(favorited => {
+        if(favorited.id === item.id) {
+          return item.isFavorite = true
+        }
+      })
+      const newFavorite = [item, ...favorite];
+      // setList(favoriteList)
+      setFavorite(newFavorite);
+      updateStoreCurrentFavorite(newFavorite)
+      // updateStoreCurrentList(favoriteList);
+    };
   
     const removeItem = id => {
       const newList = list.filter(item => item.id !== id);
@@ -39,15 +58,19 @@ export const useCurrentList = () => {
       setTimeout(() => {
         Promise.all([
           AsyncStorage.getItem('@@GroceryList/currentList'),
-          AsyncStorage.getItem('@@GroceryList/currentCart')
+          AsyncStorage.getItem('@@GroceryList/currentCart'),
+          AsyncStorage.getItem('@@GroceryList/currentFavorite'),
         ])
-          .then(([list, cartItems]) => [JSON.parse(list), JSON.parse(cartItems)])
-          .then(([list, cartItems]) => {
+          .then(([list, cartItems, isFavorite]) => [JSON.parse(list), JSON.parse(cartItems), JSON.parse(isFavorite)])
+          .then(([list, cartItems, isFavorite]) => {
             if (list) {
               setList(list);
             }
             if(cartItems) {
               setCart(cartItems)
+            }
+            if(isFavorite) {
+              setFavorite(isFavorite)
             }
             setLoading(false);
           });
@@ -60,7 +83,11 @@ export const useCurrentList = () => {
         removeItem,
         addItem,
         cart,
-        addToCart
+        addToCart,
+        favorite,
+        addToFavorite,
+        setFavorite,
+        updateStoreCurrentFavorite
     }
   
 }

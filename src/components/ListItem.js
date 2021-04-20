@@ -9,6 +9,7 @@ import {
   Animated,
 } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { useCurrentList } from '../util/ListManager';
 const styles = StyleSheet.create({
   container: {
     padding: 20,
@@ -105,6 +106,7 @@ const ListItem = ({
   onAddedSwipe,
   onDeleteSwipe,
 }) => {
+
   let starIcon;
   if (isFavourite) {
     starIcon = Platform.select({
